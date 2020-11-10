@@ -2,11 +2,11 @@
     <string name="app_name">My Basic Activity App</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="item_list_fragment_label">Item List</string>
-    <string name="item_edit_fragment_label">Item Edit</string>
+    <string name="product_list_fragment_label">Product List</string>
+    <string name="product_edit_fragment_label">Product Edit</string>
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
 
-    <string name="item_list_fragment">Item list fragment</string>
-    <string name="item_edit_fragment">Item edit fragment</string>
+    <string name="product_list_fragment">Product list fragment</string>
+    <string name="product_edit_fragment">Product edit fragment</string>
 </resources>

@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/ItemListFragment"
-        android:name="com.example.calin.myandroidapp.ItemListFragment"
-        android:label="@string/item_list_fragment_label"
-        tools:layout="@layout/fragment_item_list">
+        android:name="com.example.calin.myandroidapp.ProductListFragment"
+        android:label="@string/product_list_fragment_label"
+        tools:layout="@layout/fragment_product_list">
 
         <action
-            android:id="@+id/action_ItemListFragment_to_ItemEditFragment"
+            android:id="@+id/action_ProductListFragment_to_ProductEditFragment"
             app:destination="@id/ItemEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/ItemEditFragment"
-        android:name="com.example.calin.myandroidapp.ItemEditFragment"
-        android:label="@string/item_edit_fragment_label"
-        tools:layout="@layout/fragment_item_edit">
+        android:name="com.example.calin.myandroidapp.ProductEditFragment"
+        android:label="@string/product_edit_fragment_label"
+        tools:layout="@layout/fragment_product_edit">
 
         <action
-            android:id="@+id/action_ItemEditFragment_to_ItemListFragment"
+            android:id="@+id/action_ProductEditFragment_to_ProductListFragment"
             app:destination="@id/ItemListFragment" />
     </fragment>
 </navigation>
