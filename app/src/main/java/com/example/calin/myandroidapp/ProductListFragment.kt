@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -44,15 +45,24 @@ class ProductListFragment : Fragment() {
 
     private fun setupProductList() {
         productListAdapter = ProductListAdapter(this)
-        Log.i(TAG, "here1")
         item_list.adapter = productListAdapter
-        Log.i(TAG, "here2")
         productModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
-        Log.i(TAG, "here3")
-        productModel.products.observe(viewLifecycleOwner, { value ->
-            productListAdapter.products = value
+        productModel.products.observe(viewLifecycleOwner, { product ->
+            Log.i(TAG, "update product")
+            productListAdapter.products = product
         })
-        Log.i(TAG, "here4")
+        productModel.loading.observe(viewLifecycleOwner, { loading ->
+            Log.i(TAG, "update loading")
+            progress.visibility = if (loading) View.VISIBLE else View.GONE
+        })
+        productModel.loadingError.observe(viewLifecycleOwner) { exception ->
+            if (exception != null) {
+                Log.i(TAG, "update loading error")
+                val message = "Loading exception ${exception.message}"
+                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+        productModel.loadProducts()
     }
 
     override fun onDestroy() {
