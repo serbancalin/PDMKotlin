@@ -1,4 +1,4 @@
-package com.example.calin.myandroidapp
+package com.example.calin.myandroidapp.core
 
 val Any.TAG: String
     get() {

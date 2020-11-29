@@ -1,4 +1,4 @@
-package com.example.calin.myandroidapp
+package com.example.calin.myandroidapp.todo.products
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
+import com.example.calin.myandroidapp.R
+import com.example.calin.myandroidapp.auth.data.AuthRepository
+import com.example.calin.myandroidapp.core.TAG
 import kotlinx.android.synthetic.main.fragment_product_list.*
 
 /**
@@ -30,31 +34,33 @@ class ProductListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_product_list, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fab.setOnClickListener {
-            Log.v(TAG, "creating new product")
-            productModel.products.value?.size?.let { productModel.createProduct(it) }
-        }
-    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.i(TAG, "onActivityCreated")
+        Log.v(TAG, "onActivityCreated")
+        if (!AuthRepository.isLoggedIn) {
+            findNavController().navigate(R.id.fragment_login)
+            return;
+        }
         setupProductList()
+        fab.setOnClickListener {
+            Log.v(TAG, "add new product")
+            findNavController().navigate(R.id.fragment_product_edit)
+        }
     }
-
     private fun setupProductList() {
         productListAdapter = ProductListAdapter(this)
-        item_list.adapter = productListAdapter
+        product_list.adapter = productListAdapter
         productModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
-        productModel.products.observe(viewLifecycleOwner, { product ->
-            Log.i(TAG, "update product")
-            productListAdapter.products = product
-        })
-        productModel.loading.observe(viewLifecycleOwner, { loading ->
+        productModel.products.observe(viewLifecycleOwner) { products ->
+            Log.i(TAG, "update products")
+            productListAdapter.products = products
+            Log.i(TAG, "update products done")
+        }
+        productModel.loading.observe(viewLifecycleOwner) { loading ->
             Log.i(TAG, "update loading")
             progress.visibility = if (loading) View.VISIBLE else View.GONE
-        })
+            Log.i(TAG, "update loading done")
+        }
         productModel.loadingError.observe(viewLifecycleOwner) { exception ->
             if (exception != null) {
                 Log.i(TAG, "update loading error")
@@ -62,7 +68,7 @@ class ProductListFragment : Fragment() {
                 Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
             }
         }
-        productModel.loadProducts()
+        productModel.refresh()
     }
 
     override fun onDestroy() {

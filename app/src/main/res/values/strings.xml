@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">My Basic Activity App</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="product_list_fragment_label">Product List</string>
     <string name="product_edit_fragment_label">Product Edit</string>
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
-
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must not be empty</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
     <string name="product_list_fragment">Product list fragment</string>
     <string name="product_edit_fragment">Product edit fragment</string>
 </resources>
